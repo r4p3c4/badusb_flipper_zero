@@ -1,0 +1,7 @@
+GUI r
+DELAY 1000
+STRING powershell
+ENTER
+DELAY 1000
+STRING "Procesos con puertos establecidos:"; Get-NetTCPConnection | Where-Object { $_.State -eq 'Established' } | ForEach-Object { $proc = Get-Process -Id $_.OwningProcess; [PSCustomObject]@{PID=$_.OwningProcess; Proceso=$proc.ProcessName; LocalAddress=$_.LocalAddress; RemoteAddress=$_.RemoteAddress; LocalPort=$_.LocalPort; RemotePort=$_.RemotePort}} | Format-Table -AutoSize; "nProcesos con puertos en escucha:"; Get-NetTCPConnection | Where-Object { $_.State -eq 'Listen' } | ForEach-Object { $proc = Get-Process -Id $_.OwningProcess; [PSCustomObject]@{PID=$_.OwningProcess; Proceso=$proc.ProcessName; LocalAddress=$_.LocalAddress; LocalPort=$_.LocalPort}} | Format-Table -AutoSize
+ENTER
